@@ -26,14 +26,11 @@ public class Food {
                 .anyMatch(rectangle -> rectangle.getX() == this.getX() || rectangle.getY() == this.getY());
     }
     
-    public void FoodPosX() {
-    	setX((int)(Math.random() * Game.width - 1));
-    }
+    public void FoodPosX() {setX((int)(Math.random() * Game.WIDTH - 1));}
     
     public void FoodPosY() {
-    	setY((int)(Math.random() * Game.height - 1));
+    	setY((int)(Math.random() * Game.HEIGHT - 1));
     }
-
 
     public int getX() {
         return x;

@@ -4,9 +4,9 @@ import java.awt.event.KeyListener;
 
 public class Game implements KeyListener{
 
-    public static final int width = 30;
-    public static final int height = 30;
-    public static final int dimension = 20;
+    public static final int WIDTH = 30;
+    public static final int HEIGHT = 30;
+    public static final int DIMENSION = 20;
 
     private Snake snake;
     private Food food;
@@ -25,7 +25,7 @@ public class Game implements KeyListener{
         window.add(graphics);
         
         window.setTitle("Snake");
-        window.setSize(width * dimension + 2, height * dimension + dimension + 4);
+        window.setSize(WIDTH * DIMENSION + 2, HEIGHT * DIMENSION + DIMENSION + 4);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -46,30 +46,26 @@ public class Game implements KeyListener{
     }
 
     private boolean wallCollision(){
-        if(snake.getX() < 0
-        || snake.getX() >= width * dimension
-        || snake.getY() < 0
-        || snake.getY() >= height * dimension
-        )return true;
+        if(snake.getHeadX() < 0
+        || snake.getHeadX() >= WIDTH * DIMENSION
+        || snake.getHeadY() < 0
+        || snake.getHeadY() >= HEIGHT * DIMENSION)
+            return true;
         
         return false;
     }
 
     private boolean didEatFood(){
-        if(snake.getX() == food.getX() * dimension && snake.getY() == food.getY() * dimension)
+        if(snake.getHeadX() == food.getX() * DIMENSION && snake.getHeadY() == food.getY() * DIMENSION)
             return true;
         return false;
     }
 
     private boolean snakeCollision(){
-    	
-        for(int i = 1; i < snake.getBody().size(); i++){
-            if(snake.getX() == snake.getBody().get(i).x
-            && snake.getY() == snake.getBody().get(i).y){
-                return true;
-            }
-        }
-        return false;
+    	return snake.getBody()
+                .stream()
+                .skip(1)
+                .anyMatch( s -> snake.getHeadX() == s.x && snake.getHeadY() == s.y);
     }
 
     @Override
@@ -78,23 +74,13 @@ public class Game implements KeyListener{
 
        if(graphics.state.equals("RUNNING")) {
            switch (keyCode) {
-               case KeyEvent.VK_W:
-                   snake.up();
-                   break;
-
-               case KeyEvent.VK_A:
-                   snake.left();
-                   break;
-
-               case KeyEvent.VK_S:
-                   snake.down();
-                   break;
-
-               case KeyEvent.VK_D:
-                   snake.right();
-                   break;
+               case KeyEvent.VK_W -> snake.up();
+               case KeyEvent.VK_A -> snake.left();
+               case KeyEvent.VK_S -> snake.down();
+               case KeyEvent.VK_D -> snake.right();
            }
        }
+
        else this.startGame();
     }
 

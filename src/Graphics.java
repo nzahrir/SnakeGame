@@ -32,24 +32,23 @@ implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.setColor(Color.black);
-		g2d.fillRect(0, 0, Game.width * Game.dimension + 5, Game.height * Game.dimension + 5);
+		g2d.fillRect(0, 0, Game.WIDTH * Game.DIMENSION + 5, Game.HEIGHT * Game.DIMENSION + 5);
 		
 		if(state == "START") {
 			g2d.setColor(Color.white);
-			g2d.drawString("Press Any Key", Game.width/2 * Game.dimension - 40, Game.height / 2 * Game.dimension - 20);
+			g2d.drawString("Press Any Key", Game.WIDTH/2 * Game.DIMENSION - 40, Game.HEIGHT / 2 * Game.DIMENSION - 20);
 		}
 		else if(state == "RUNNING") {
 			g2d.setColor(Color.red);
-			g2d.fillRect(food.getX() * Game.dimension, food.getY() * Game.dimension, Game.dimension, Game.dimension);
+			g2d.fillRect(food.getX() * Game.DIMENSION, food.getY() * Game.DIMENSION, Game.DIMENSION, Game.DIMENSION);
 		
 			g2d.setColor(Color.green);
 			
-			snake.getBody().stream().forEach(rectangle -> g2d.fill(rectangle));
-
+			snake.getBody().stream().forEach(g2d::fill);
 		}
 		else {
 			g2d.setColor(Color.white);
-			g2d.drawString("Your Score: " + (snake.getBody().size() - 3), Game.width/2 * Game.dimension - 40, Game.height / 2 * Game.dimension - 20);
+			g2d.drawString("Your Score: " + snake.getScore(), Game.WIDTH/2 * Game.DIMENSION - 40, Game.HEIGHT / 2 * Game.DIMENSION - 20);
 		}
 	}
     @Override
